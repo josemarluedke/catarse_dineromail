@@ -1,3 +1,12 @@
 CatarseDineromail::Engine.routes.draw do
-  get "payment/dineromail/pay/:id", to: "payment::dineromail#pay"
+  namespace :payment do
+    resources :dineromail, only: [] do
+      member do
+        get :pay
+        get :success
+        get :error
+        get :notifications
+      end
+    end
+  end
 end
