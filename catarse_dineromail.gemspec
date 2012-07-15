@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
+  s.add_development_dependency "rspec"
   s.add_dependency "rails", "~> 3.2.6"
   s.add_dependency "dinero_mail_checkout"
   s.add_dependency "dinero_mail_ipn"
