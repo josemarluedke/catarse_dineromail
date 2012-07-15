@@ -7,12 +7,13 @@ module CatarseDineromail
       def pay
         backer = current_user.backs.not_confirmed.find params[:id]
         begin
-          transaction_id = (Digest::MD5.hexdigest "#{SecureRandom.hex(5)}-#{DateTime.now.to_s}")[1..20]
+          transaction_id = (Digest::MD5.hexdigest "#{SecureRandom.hex(5)}-#{DateTime.now.to_s}")[1..20].downcase
           backer.update_attribute :payment_method, 'Dineromail'
           backer.update_attribute :payment_token, transaction_id
           data = DineroMailCheckout::CheckoutData.validate({item_name_1: t('paypal_description',
                                                             scope: SCOPE),
                                                             item_quantity_1: 1,
+                                                            item_currency_1: DineroMailCheckout.configuration.currency,
                                                             change_quantity: 0,
                                                             item_ammount_1: backer.moip_value,
                                                             buyer_name: backer.user.name,
@@ -32,24 +33,42 @@ module CatarseDineromail
 
       def success
         backer = current_user.backs.find params[:id]
-        begin
-          session[:thank_you_id] = backer.project.id
-          session[:_payment_token] = backer.payment_token
+        session[:thank_you_id] = backer.project.id
+        session[:_payment_token] = backer.payment_token
 
-          flash[:success] = t('success', scope: SCOPE)
-          redirect_to main_app.thank_you_path
-        rescue Exception => e
-          Airbrake.notify({ :error_class => "Paypal Error", :error_message => "Paypal Error: #{e.message}", :parameters => params}) rescue nil
-          Rails.logger.info "-----> #{e.inspect}"
-          paypal_flash_error
-          return redirect_to main_app.tnew_project_backer_path(backer.project)
-        end
+        flash[:success] = t('success', scope: SCOPE)
+        redirect_to main_app.thank_you_path
       end
 
       def error
         backer = Backer.find params[:id]
         flash[:failure] = t('paypal_error', scope: SCOPE)
-        redirect_to new_project_backer_path(backer.project)
+        redirect_to main_app.new_project_backer_path(backer.project)
+      end
+
+      def notifications
+        notification = params[:Notificacion]
+        return render nothing: true if notification.nil?
+
+        # example of XML (params[:Notificacion])
+        #notification = "<NOTIFICACION><TIPONOTIFICACION>12</TIPONOTIFICACION><OPERACIONES><OPERACION><TIPO>1</TIPO><ID>2320</ID></OPERACION><OPERACION><TIPO>12</TIPO><ID>434</ID></OPERACION></OPERACIONES></NOTIFICACION>"
+        xml = Nokogiri::XML(notification)
+        ids = []
+        xml.xpath("//OPERACION//ID").each {|o| ids << o.children.text}
+
+        c = DineroMailIpn::Client.new(:account => ::Configuration[:dineromail_merchant], :password => ::Configuration[:dineromail_ipn_password])
+        reports = c.consulta_transacciones(ids).reports
+        if reports
+          reports.each do |report|
+            begin
+              backer = Backer.not_confirmed.where payment_token: report.id
+              backer.confirm! if backer and report.transaction_completed?
+            rescue Exception => e
+              Rails.logger.info "-----> #{e.inspect}"
+            end
+          end
+        end
+        render nothing: true
       end
 
       protected
@@ -59,7 +78,7 @@ module CatarseDineromail
           config.merchant = (::Configuration[:dineromail_merchant] || nil)
           config.logo_url = "#{request.protocol}#{request.host_with_port}/assets/logo.png"
           config.currency = DineroMailCheckout::Configuration::Currency::CLP
-          config.country_id = 3
+          config.country_id = ::Configuration[:dineromail_country_id]
         end
       end
 

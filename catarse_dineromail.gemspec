@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.6"
   s.add_dependency "dinero_mail_checkout"
+  s.add_dependency "dinero_mail_ipn"
 end

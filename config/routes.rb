@@ -5,7 +5,10 @@ CatarseDineromail::Engine.routes.draw do
         get :pay
         get :success
         get :error
-        get :notifications
+      end
+
+      collection do
+        post :notifications
       end
     end
   end

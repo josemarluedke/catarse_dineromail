@@ -1,3 +1,17 @@
+GIT
+  remote: git://github.com/josemarluedke/dinero_mail_checkout.git
+  revision: 76ed676bc280ab7efcb59efb34f40f1a2f86ba6f
+  specs:
+    dinero_mail_checkout (0.0.1)
+
+GIT
+  remote: git://github.com/josemarluedke/dinero_mail_ipn.git
+  revision: 57bdbf13cd2de2933a103b98c886087b2eea0b94
+  specs:
+    dinero_mail_ipn (1.0.2)
+      httparty (~> 0.6.1)
+      nokogiri (~> 1.4.3)
+
 PATH
   remote: .
   specs:
@@ -37,9 +51,11 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     builder (3.0.0)
-    dinero_mail_checkout (0.0.1)
+    crack (0.1.8)
     erubis (2.7.0)
     hike (1.2.1)
+    httparty (0.6.1)
+      crack (= 0.1.8)
     i18n (0.6.0)
     journey (1.0.4)
     json (1.7.3)
@@ -49,6 +65,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.19)
     multi_json (1.3.6)
+    nokogiri (1.4.7)
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -91,3 +108,5 @@ PLATFORMS
 
 DEPENDENCIES
   catarse_dineromail!
+  dinero_mail_checkout!
+  dinero_mail_ipn!
