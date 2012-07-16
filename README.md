@@ -2,7 +2,6 @@
 
 Dineromail integration with Catarse crowdfunding platform
 
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -27,7 +26,6 @@ Create required configurations into Catarse database:
 
     dineromail_country_id
 
-
 ## Development environment setup
 
 Clone the repository
@@ -42,6 +40,9 @@ Copy the Catarse's gem into Gemfile
 
     $ cat test/dummy/Gemfile >> Gemfile
 
+And then execute:
+
+    $ bundle
 
 ## Contributing
 
