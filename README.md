@@ -6,7 +6,9 @@ Dineromail integration with [Catarse](http://github.com/danielweinmann/catarse) 
 
 Add this line to your Catarse application's Gemfile:
 
-    gem 'catarse_dinero'
+    gem 'dinero_mail_checkout', git: "git://github.com/josemarluedke/dinero_mail_checkout.git"
+    gem 'dinero_mail_ipn', git: "git://github.com/josemarluedke/dinero_mail_ipn.git"
+    gem 'catarse_dineromail'
 
 And then execute:
 
@@ -18,13 +20,17 @@ Configure the routes for your Catarse application. Add the following lines in th
     
     mount CatarseDineromail::Engine => "/", :as => "catarse_dineromail"
 
-Create required configurations into Catarse database:
-    
-    dineromail_merchant
+### Configurations
 
-    dineromail_ipn_password
+Create this configurations into Catarse database:
 
-    dineromail_country_id
+    dineromail_merchant, dineromail_ipn_password and dineromail_country_id
+
+In Rails console, run this:
+
+    Configuration.create!(name: "dineromail_merchant", value: "123456")
+    Configuration.create!(name: "dineromail_country_id", value: "2")
+    Configuration.create!(name: "dineromail_ipn_password", value: "ipn_password")
 
 ## Development environment setup
 
@@ -36,7 +42,7 @@ Add the catarse code into test/dummy:
 
     $ git submodule add git://github.com/danielweinmann/catarse.git test/dummy
 
-Copy the Catarse's gem into Gemfile:
+Copy the Catarse's gems to Gemfile:
 
     $ cat test/dummy/Gemfile >> Gemfile
 
