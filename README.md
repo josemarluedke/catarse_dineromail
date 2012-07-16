@@ -6,7 +6,6 @@ Dineromail integration with [Catarse](http://github.com/danielweinmann/catarse) 
 
 Add this line to your Catarse application's Gemfile:
 
-    gem 'dinero_mail_checkout', git: "git://github.com/josemarluedke/dinero_mail_checkout.git"
     gem 'dinero_mail_ipn', git: "git://github.com/josemarluedke/dinero_mail_ipn.git"
     gem 'catarse_dineromail'
 
