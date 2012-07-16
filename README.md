@@ -1,10 +1,10 @@
 # CatarseDineromail
 
-Dineromail integration with Catarse crowdfunding platform
+Dineromail integration with [Catarse](http://github.com/danielweinmann/catarse) crowdfunding platform
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your Catarse application's Gemfile:
 
     gem 'catarse_dinero'
 
@@ -14,7 +14,7 @@ And then execute:
 
 ## Usage
 
-Configure the routes for your Catarse application. Add the following lines in the routes file (config/routes.rb)
+Configure the routes for your Catarse application. Add the following lines in the routes file (config/routes.rb):
     
     mount CatarseDineromail::Engine => "/", :as => "catarse_dineromail"
 
@@ -28,15 +28,15 @@ Create required configurations into Catarse database:
 
 ## Development environment setup
 
-Clone the repository
+Clone the repository:
 
     $ git clone git://github.com/josemarluedke/catarse_dineromail.git
 
-Add the catarse code into test/dummy
+Add the catarse code into test/dummy:
 
     $ git submodule add git://github.com/danielweinmann/catarse.git test/dummy
 
-Copy the Catarse's gem into Gemfile
+Copy the Catarse's gem into Gemfile:
 
     $ cat test/dummy/Gemfile >> Gemfile
 
