@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = CatarseDineromail::VERSION
   s.authors     = ["Josemar Davi Luedke"]
   s.email       = ["josemarluedke@gmail.com"]
-  s.homepage    = "http://github.com/josemarluedke/catarse-dineromail"
+  s.homepage    = "http://github.com/josemarluedke/catarse_dineromail"
   s.summary     = "Dineromail integration with Catarse"
   s.description = "Dineromail integration with Catarse crowdfunding platform"
 
