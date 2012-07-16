@@ -42,7 +42,7 @@ module CatarseDineromail
       end
 
       def error
-        backer = Backer.find params[:id]
+        backer = current_user.backs.find params[:id]
         flash[:failure] = t('paypal_error', scope: SCOPE)
         redirect_to main_app.new_project_backer_path(backer.project)
       end

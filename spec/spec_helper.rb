@@ -37,6 +37,11 @@ RSpec.configure do |config|
   # Include Engine routes (needed for Controller specs)
   config.include CatarseDineromail::Engine.routes.url_helpers
 
+  # Include Catarse routes
+  config.include Catarse::Application.routes.url_helpers
+
+  config.include Devise::TestHelpers, :type => :controller
+
   config.include Factory::Syntax::Methods
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
