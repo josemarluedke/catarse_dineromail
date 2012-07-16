@@ -13,8 +13,8 @@ Gem::Specification.new do |s|
   s.summary     = "Dineromail integration with Catarse"
   s.description = "Dineromail integration with Catarse crowdfunding platform"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.files         = `git ls-files`.split($\)
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
 
   s.add_dependency "rails", "~> 3.2.6"
   s.add_dependency "dinero_mail_checkout"
