@@ -11,7 +11,7 @@ module CatarseDineromail
             transaction_id = (Digest::MD5.hexdigest "#{SecureRandom.hex(5)}-#{DateTime.now.to_s}")[1..20].downcase
             backer.update_attribute :payment_method, 'Dineromail'
             backer.update_attribute :payment_token, transaction_id
-            data = DineroMailCheckout::CheckoutData.validate({item_name_1: t('paypal_description', scope: SCOPE),
+            data = DineroMailCheckout::CheckoutData.validate({item_name_1: t('dineromail_description', scope: SCOPE),
                                                               item_quantity_1: 1,
                                                               item_currency_1: DineroMailCheckout.configuration.currency,
                                                               change_quantity: 0,
@@ -27,7 +27,7 @@ module CatarseDineromail
         rescue Exception => e
           Airbrake.notify({ :error_class => "Dineromail Error", :error_message => "Dineromail Error: #{e.inspect}", :parameters => params}) rescue nil
           Rails.logger.info "-----> #{e.inspect}"
-          flash[:failure] = t('paypal_error', scope: SCOPE)
+          flash[:failure] = t('dineromail_error', scope: SCOPE)
           return redirect_to main_app.new_project_backer_path(backer.project)
         end
       end
@@ -43,7 +43,7 @@ module CatarseDineromail
 
       def error
         backer = current_user.backs.find params[:id]
-        flash[:failure] = t('paypal_error', scope: SCOPE)
+        flash[:failure] = t('dineromail_error', scope: SCOPE)
         redirect_to main_app.new_project_backer_path(backer.project)
       end
 
