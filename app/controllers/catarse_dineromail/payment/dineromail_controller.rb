@@ -16,7 +16,7 @@ module CatarseDineromail
                                                               item_currency_1: DineroMailCheckout.configuration.currency,
                                                               change_quantity: 0,
                                                               item_ammount_1: backer.moip_value,
-                                                              buyer_name: backer.user.name,
+                                                              buyer_name: backer.user.full_name,
                                                               buyer_phone: backer.user.phone_number,
                                                               buyer_email: backer.user.email,
                                                               ok_url: success_payment_dineromail_url(backer),
