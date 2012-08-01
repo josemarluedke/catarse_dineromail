@@ -16,7 +16,7 @@ module CatarseDineromail
             backer.update_attribute :payment_token, transaction_id
             data = DineroMailCheckout::CheckoutData.validate({item_name_1: t('dineromail_description', scope: SCOPE),
                                                               item_quantity_1: 1,
-                                                              item_currency_1: DineroMailCheckout.configuratior.currency,
+                                                              item_currency_1: DineroMailCheckout.configuration.currency,
                                                               change_quantity: 0,
                                                               item_ammount_1: backer.moip_value,
                                                               buyer_name: backer.user.full_name,
