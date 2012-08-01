@@ -16,7 +16,7 @@ And then execute:
 ## Usage
 
 Configure the routes for your Catarse application. Add the following lines in the routes file (config/routes.rb):
-    
+
     mount CatarseDineromail::Engine => "/", :as => "catarse_dineromail"
 
 ### Configurations
@@ -48,6 +48,22 @@ Copy the Catarse's gems to Gemfile:
 And then execute:
 
     $ bundle
+
+Replace the content of test/dummy/config/boot.rb by this:
+    require 'rubygems'
+    gemfile = File.expand_path('../../../../Gemfile', __FILE__)
+    if File.exist?(gemfile)
+      ENV['BUNDLE_GEMFILE'] = gemfile
+      require 'bundler'
+      Bundler.setup
+    end
+    $:.unshift File.expand_path('../../../../lib', __FILE__)
+
+## Troubleshooting in development environment
+
+Remove the admin folder from test/dummy application to prevent a weird active admin bug:
+
+    $ rm -rf test/dummy/app/admin
 
 ## Contributing
 

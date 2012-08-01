@@ -3,7 +3,7 @@ module CatarseDineromail
     class DineromailController < ApplicationController
       skip_before_filter :verify_authenticity_token, :only => [:notifications]
       skip_before_filter :detect_locale, :only => [:notifications]
-      skip_before_filter :set_locale, :only => [:notifications]
+      skip_before_filter :set_locale, :only => [:notifications
       before_filter :initialize_dineromail
       SCOPE = "projects.backers.checkout"
 
@@ -16,7 +16,7 @@ module CatarseDineromail
             backer.update_attribute :payment_token, transaction_id
             data = DineroMailCheckout::CheckoutData.validate({item_name_1: t('dineromail_description', scope: SCOPE),
                                                               item_quantity_1: 1,
-                                                              item_currency_1: DineroMailCheckout.configuration.currency,
+                                                              item_currency_1: DineroMailCheckout.configuratior.currency,
                                                               change_quantity: 0,
                                                               item_ammount_1: backer.moip_value,
                                                               buyer_name: backer.user.full_name,
@@ -51,7 +51,7 @@ module CatarseDineromail
       end
 
       def notifications
-        notification = params[:Notificacion]
+        notification = URI::decode(params[:Notificacion])
         return render(status: 404, nothing: true) if notification.nil?
 
         xml = Nokogiri::XML(notification)
