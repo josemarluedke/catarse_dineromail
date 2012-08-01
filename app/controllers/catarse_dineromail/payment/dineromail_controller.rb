@@ -1,6 +1,9 @@
 module CatarseDineromail
   module Payment
     class DineromailController < ApplicationController
+      skip_before_filter :verify_authenticity_token, :only => [:notifications]
+      skip_before_filter :detect_locale, :only => [:notifications]
+      skip_before_filter :set_locale, :only => [:notifications]
       before_filter :initialize_dineromail
       SCOPE = "projects.backers.checkout"
 
