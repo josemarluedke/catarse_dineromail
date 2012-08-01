@@ -52,6 +52,8 @@ module CatarseDineromail
 
       def notifications
         notification = params[:Notificacion]
+        puts params.inspect
+        Rails.logger.info params.inspect
         return render(status: 404, nothing: true) if notification.nil?
 
         xml = Nokogiri::XML(notification)
