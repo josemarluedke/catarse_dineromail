@@ -58,7 +58,10 @@ Replace the content of test/dummy/config/boot.rb by this:
       require 'bundler'
       Bundler.setup
     end
+    YAML::ENGINE.yamler= 'syck' if defined?(YAML::ENGINE)
+
     $:.unshift File.expand_path('../../../../lib', __FILE__)
+
 
 ## Troubleshooting in development environment
 

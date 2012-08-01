@@ -51,14 +51,14 @@ module CatarseDineromail
       end
 
       def notifications
-        notification = URI::decode(params[:Notificacion])
+        notification = params[:Notificacion]
         return render(status: 404, nothing: true) if notification.nil?
 
         xml = Nokogiri::XML(notification)
         ids = []
         xml.xpath("//OPERACION//ID").each {|o| ids << o.children.text}
 
-        c = DineroMailIpn::Client.new(account: ::Configuration[:dineromail_merchant], password: ::Configuration[:dineromail_ipn_password], pais: DineroMailCheckout::Configuration.country_name(::Configuration[:dineromail_country_id]))
+        c = DineroMailIpn::Client.new(account: ::Configuration[:dineromail_merchant], password: ::Configuration[:dineromail_ipn_password], pais: DineroMailCheckout::Configuration.country_name(::Configuration[:dineromail_country_id].to_i))
         reports = c.consulta_transacciones(ids).reports
         if reports
           reports.each do |report|
