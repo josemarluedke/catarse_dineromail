@@ -50,6 +50,7 @@ And then execute:
     $ bundle
 
 Replace the content of test/dummy/config/boot.rb by this:
+
     require 'rubygems'
     gemfile = File.expand_path('../../../../Gemfile', __FILE__)
     if File.exist?(gemfile)
