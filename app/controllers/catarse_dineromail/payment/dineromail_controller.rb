@@ -52,13 +52,12 @@ module CatarseDineromail
 
       def notifications
         notification = params[:Notificacion]
-        puts params.inspect
         Rails.logger.info params.inspect
         return render(status: 404, nothing: true) if notification.nil?
 
-        xml = Nokogiri::XML(notification)
+        xml = Nokogiri::XML(notification.downcase)
         ids = []
-        xml.xpath("//OPERACION//ID").each {|o| ids << o.children.text}
+        xml.xpath("//operacion//id").each {|o| ids << o.children.text}
 
         c = DineroMailIpn::Client.new(account: ::Configuration[:dineromail_merchant], password: ::Configuration[:dineromail_ipn_password], pais: DineroMailCheckout::Configuration.country_name(::Configuration[:dineromail_country_id].to_i))
         reports = c.consulta_transacciones(ids).reports
