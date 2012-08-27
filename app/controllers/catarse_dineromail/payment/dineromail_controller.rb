@@ -80,7 +80,7 @@ module CatarseDineromail
           config.payment_method = 'all'
           config.merchant = (::Configuration[:dineromail_merchant] || nil)
           config.logo_url = "#{request.protocol}#{request.host_with_port}/assets/logo.png"
-          config.currency = DineroMailCheckout::Configuration::Currency::USD
+          config.currency = ::Configuration[:dineromail_currency]
           config.country_id = ::Configuration[:dineromail_country_id]
         end
       end

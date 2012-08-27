@@ -30,6 +30,14 @@ In Rails console, run this:
     Configuration.create!(name: "dineromail_merchant", value: "123456")
     Configuration.create!(name: "dineromail_country_id", value: "2")
     Configuration.create!(name: "dineromail_ipn_password", value: "ipn_password")
+    Configuration.create!(name: "dineromail_currency", value: "clp")
+
+  Currencies:
+    "ars"
+    "mxn"
+    "clp"
+    "brl"
+    "usd"
 
 ## Development environment setup
 
